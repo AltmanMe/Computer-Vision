@@ -8,7 +8,12 @@ Created on Fri Jun  1 19:50:47 2018
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
+import argparse
 
+ap = argparse.ArgumentParser()
+ap.add_argument('-l', '--left', required=True, help='path to the left image')
+ap.add_argument('-r', '--right', required=True, help='path to the right image')
+args = vars(ap.parse_args())
 
 def drawlines(img1,img2,lines,pts1,pts2):
     ''' img1 - image on which we draw the epilines for the points in img2
@@ -25,11 +30,19 @@ def drawlines(img1,img2,lines,pts1,pts2):
         img2 = cv2.circle(img2,tuple(pt2),5,color,-1)
     return img1,img2
 
-img1 = cv2.imread('D:\\stereo\\stereo_calibration\\rectified_l.png', 0)  #queryimage # left image
-img2 = cv2.imread('D:\\stereo\\stereo_calibration\\rectified_r.png', 0) #trainimage # right image
+img1 = cv2.imread(args['left'], 0)  #queryimage # left image
+img2 = cv2.imread(args['right'], 0) #trainimage # right image
+
+h1, w1 = img1.shape[:2]
+h2, w2 = img2.shape[:2]
+
+h = min(h1, h2) 
+w = min(w1, w2)
+
+img1 = img1.resize((h, w, 3))
+img2 = img2.resize((h, w, 3))
 
 sift = cv2.xfeatures2d.SIFT_create()
-
 
 # find the keypoints and descriptors with SIFT
 kp1, des1 = sift.detectAndCompute(img1,None)
@@ -74,12 +87,8 @@ lines2 = cv2.computeCorrespondEpilines(pts1.reshape(-1,1,2), 1,F)
 lines2 = lines2.reshape(-1,3)
 img3,img4 = drawlines(img2,img1,lines2,pts2,pts1)
 
-w, h = img3.shape[:2]
-
-img5_resized = img5[:w, :h]
-
-img_horizontal = np.hstack((img5_resized, img3))
-img_horizontal_concat = np.concatenate((img5_resized, img3), axis=1)
+img_horizontal = np.hstack((img3, img5))
+img_horizontal_concat = np.concatenate((img3, img5), axis=1)
 
 #cv2.imshow('img', img5)
 #cv2.imshow('img', img3)
