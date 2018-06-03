@@ -19,11 +19,11 @@ Computer Vision Basics
     python draw_lines.py -h
 ```
 ### Then it will give you tips like:
-```python
+```
 optional arguments:
-  -h, --help            show this help message and exit
-  -l LEFT_IMG, --left_img LEFT_IMG path to the left                        
-  -r RIGHT_IMG, --right_img RIGHT_IMG path to the right
+  -h, -- help            show this help message and exit
+  -l LEFT_IMG, -- left_img LEFT_IMG path to the left                        
+  -r RIGHT_IMG, -- right_img RIGHT_IMG path to the right
 ```
 
 
