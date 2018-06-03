@@ -33,7 +33,7 @@ optional arguments:
 ```
 python single_calibrate.py -i /path/image_path -s False
 False means that do not save the undistoted images.
-If True,   it will make a directory called `undistoted_images` in current dir.
+If True, it will make a directory called `undistoted_images` in current dir.
 ```
 * ### calibrate binouclar camera system
 ```
