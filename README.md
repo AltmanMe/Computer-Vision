@@ -33,7 +33,7 @@ optional arguments:
 ```
 python single_calibrate.py -i /path/image_path -s False
 False means that do not save the undistoted images.
-if you want to save them, you can ignore this parameter.
+If True,   it will make a directory called `undistoted_images` in current dir.
 ```
 * ### calibrate binouclar camera system
 ```
@@ -45,7 +45,7 @@ python rectify.py -h
 ```
 * ### visulize depth 
 ```
-python compute_depthpy
+python compute_depth.py
 ```
 * ### find corresponding feature points and draw epipolar lines
 ```
