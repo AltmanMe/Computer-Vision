@@ -1,6 +1,7 @@
 Computer Vision Basics
 ========
-#Stereo Calibration using OpenCV-Python
+# Stereo Calibration using OpenCV-Python
+## All codes had been tested in Manjaro Linux
 
 ## Features
 * ### calibrate single camera
@@ -28,11 +29,27 @@ optional arguments:
 
 
 ## Example
-* ### calibrate camera and undistort images
+* ### calibrate single camera and undistort images
 ```
 python single_calibrate.py -i /path/image_path -s False
 False means that do not save the undistoted images.
 if you want to save them, you can ignore this parameter.
+```
+* ### calibrate binouclar camera system
+```
+python camera_calibrate.py -h
+```
+* ### rectify images
+```
+python rectify.py -h
+```
+* ### visulize depth 
+```
+python compute_depthpy
+```
+* ### find corresponding feature points and draw epipolar lines
+```
+python epipolar_lines.py -h
 ```
 
 
