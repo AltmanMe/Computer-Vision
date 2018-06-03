@@ -14,8 +14,13 @@ from camera_calibrate import StereoCalibration
 
 img_size = (600, 450)  #output images size
 
-def compute_disparity(filepath, savepath, M1, d1, M2, d2, R, T, img_shape, save=True):
-    R1, R2, P1, P2, _, _, _ = cv2.stereoRectify(M1, d1, M2, 
+def callback_func(e, x, y, f, p):
+    if e == cv2.EVENT_LBUTTONDOWN:
+        print(threeD[y][x])
+
+
+def compute_disparity(filepath, savepath, M1, d1, M2, d2, R, T, img_shape, window_size, save=True):
+    R1, R2, P1, P2, Q, valid_pix_roi1, _valid_pix_roi2 = cv2.stereoRectify(M1, d1, M2, 
                                                 d2, img_shape, R, T, alpha=-1)
     
     map1_x, map1_y = cv2.initUndistortRectifyMap(M1, d1, R1, P1, img_shape, cv2.CV_32FC1)
@@ -37,12 +42,18 @@ def compute_disparity(filepath, savepath, M1, d1, M2, d2, R, T, img_shape, save=
         undistorted_rectified_r = cv2.remap(gray_r, map2_x, map2_y, cv2.INTER_LINEAR, img_shape)  #            
   
         max_disparity = 128
-        stereo_processor = cv2.StereoSGBM_create(0, max_disparity, 21)
+#        window_size = 21
+#        num = 5
+        stereo_processor = cv2.StereoSGBM_create(0, max_disparity, window_size, 8*window_size*window_size, 32*window_size*window_size)
+#        stereo_processor = cv2.StereoBM_create(16 * num, window_size)
     
         disparity = stereo_processor.compute(undistorted_rectified_l, undistorted_rectified_r)
         cv2.filterSpeckles(disparity, 0, 4000, 128)
     
         disparity_scaled = (disparity / 16.).astype(np.uint8) + abs(disparity.min())
+#        disparity_scaled = cv2.normalize(disparity, disparity, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_8U)
+
+        threeD = cv2.reprojectImageTo3D(disparity.astype(np.float32)/16., Q)
 
         cv2.imshow('img_l', undistorted_rectified_l)
         cv2.imshow('img_r', undistorted_rectified_r)
@@ -58,6 +69,7 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('-p', '--filepath', required=True,help='filepath contains left and right file')
     ap.add_argument('-s', '--savepath', help='path to save rectified images')
+    ap.add_argument('-w', '--window_size', help='SAP WINDOW SIZE')
     args = vars(ap.parse_args())
     
     cal_data = StereoCalibration(args['filepath'])
@@ -68,5 +80,10 @@ if __name__ == '__main__':
     
     paras = []
     paras.extend([M1, d1, M2, d2, R, T, img_size])
-    
-    compute_disparity(args['filepath'], args['savepath'], *paras)
+
+    compute_disparity(args['filepath'], args['savepath'], *paras, int(args['window_size']))
+
+    cv2.setMouseCallback('depth', callback_func, None)
+#    window_size = cv2.getTrackbarPos('SAP_Window_Size', 'depth')
+#    num = cv2.getTrackbarPos('num', 'depth')
+
