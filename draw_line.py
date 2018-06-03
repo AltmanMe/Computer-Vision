@@ -8,6 +8,7 @@ Created on Fri Jun  1 22:30:55 2018
 import cv2
 import math
 import numpy as np
+import argparse
 
 red = (0, 0, 255)  #BGR
 
@@ -30,3 +31,10 @@ def draw_line(path1, path2):
     cv2.waitKey(0)
     
     cv2.destroyAllWindows()
+
+if __name__ == '__main__':
+    ap = argparse.ArgumentParser()
+    ap.add_argument('-l', '--left_img', required=True, help='path to the left')
+    ap.add_argument('-r', '--right_img', required=True, help='path to the right')
+    args = vars(ap.parse_args())
+    draw_line(args['left_img'], args['right_img'])

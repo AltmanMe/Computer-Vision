@@ -32,8 +32,8 @@ class StereoCalibration(object):
         self.read_images(self.cal_path)
 
     def read_images(self, cal_path):
-        images_right = glob.glob(cal_path + 'right\\*.JPG')
-        images_left = glob.glob(cal_path + 'left\\*.JPG')
+        images_right = glob.glob(cal_path + '/right/*.jpg')
+        images_left = glob.glob(cal_path + '/left/*.jpg')
         images_left.sort()
         images_right.sort()
 
@@ -124,23 +124,14 @@ class StereoCalibration(object):
             self.d2, self.img_shape,
             criteria=stereocalib_criteria, flags=flags)
 
-#        print('Intrinsic_mtx_1', M1)
-#        print('dist_1', d1)
-#        print('Intrinsic_mtx_2', M2)
-#        print('dist_2', d2)
-#        print('R', R)
-#        print('T', T)
-#        print('E', E)
-#        print('F', F)
-
-        # for i in range(len(self.r1)):
-        #     print("--- pose[", i+1, "] ---")
-        #     self.ext1, _ = cv2.Rodrigues(self.r1[i])
-        #     self.ext2, _ = cv2.Rodrigues(self.r2[i])
-        #     print('Ext1', self.ext1)
-        #     print('Ext2', self.ext2)
-
-        print('')
+        print('Intrinsic_mtx_1', M1)
+        print('dist_1', d1)
+        print('Intrinsic_mtx_2', M2)
+        print('dist_2', d2)
+        print('R', self.R)
+        print('T', self.T)
+        print('E', E)
+        print('F', F)
 
         camera_model = dict([('M1', M1), ('M2', M2), ('dist1', d1),
                             ('dist2', d2), ('rvecs1', self.r1),
@@ -157,34 +148,19 @@ class StereoCalibration(object):
         map1_x, map1_y = cv2.initUndistortRectifyMap(self.M1, self.d1, R1, P1, self.img_shape, cv2.CV_32FC1)
         map2_x, map2_y = cv2.initUndistortRectifyMap(self.M2, self.d2, R2, P2, self.img_shape, cv2.CV_32FC1)
         
-        img1 = cv2.imread('D:\\stereo\\left\\left01.jpg', 0)
-        img2 = cv2.imread('D:\\stereo\\right\\right01.jpg', 0)
-        
-#        h1, w1 = img1.shape[:2]
-#        newcameramtx_l, roi_l = cv2.getOptimalNewCameraMatrix(self.M1, self.d1, (w1, h1), 1, (450, 500))
-        
-#        h2, w2 = img2.shape[:2]
-#        newcameramtx_r, roi_r = cv2.getOptimalNewCameraMatrix(self.M2, self.d2, (w2, h2), 1, (450, 500))
+        img1 = cv2.imread()
+        img2 = cv2.imread()
         
         undistorted_rectified_l = cv2.remap(img1, map1_x, map1_y, cv2.INTER_LINEAR, self.img_size)  #
         undistorted_rectified_r = cv2.remap(img2, map2_x, map2_y, cv2.INTER_LINEAR, self.img_size)  #
-        
-#        x_1, y_1, w_1, h_1 = roi_l
-#        dst_l = undistorted_rectified_l[y_1:y_1+h_1, x_1:x_1+w_1]
-#        
-#        x_2, y_2, w_2, h_2 = roi_r
-#        dst_r = undistorted_rectified_r[y_2:y_2+h_2, x_2:x_2+w_2]
         
         cv2.imwrite('rectified_l.png', undistorted_rectified_l)
         cv2.imwrite('rectified_r.png', undistorted_rectified_r)
         print('Finish writing')
 
 if __name__ == '__main__':
-#    parser = argparse.ArgumentParser()
-#    parser.add_argument('filepath', help='String Filepath')
-#    args = parser.parse_args()
-#    cal_data = StereoCalibration(args.filepath)
-    cal = StereoCalibration('D:\\stereo\\')
-#    cal.camera_model
-#    cal.cal_error()
-    cal.stereo_rectify()
+    ap = argparse.ArgumentParser()
+    ap.add_argument('-f', '--filepath', help='String Filepath')
+    args = vars(ap.parse_args())
+    cal_data = StereoCalibration(args['filepath'])
+    cal_data.camera_model

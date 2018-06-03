@@ -12,7 +12,7 @@ import argparse
 import os
 from camera_calibrate import StereoCalibration
 
-img_size = (450, 600)
+img_size = (600, 450)  #output images size
 
 def compute_disparity(filepath, savepath, M1, d1, M2, d2, R, T, img_shape, save=True):
     R1, R2, P1, P2, _, _, _ = cv2.stereoRectify(M1, d1, M2, 
@@ -21,8 +21,8 @@ def compute_disparity(filepath, savepath, M1, d1, M2, d2, R, T, img_shape, save=
     map1_x, map1_y = cv2.initUndistortRectifyMap(M1, d1, R1, P1, img_shape, cv2.CV_32FC1)
     map2_x, map2_y = cv2.initUndistortRectifyMap(M2, d2, R2, P2, img_shape, cv2.CV_32FC1)
        
-    img_left = glob.glob(filepath + 'left/*.jpg')
-    img_right = glob.glob(filepath + 'right/*.jpg')
+    img_left = glob.glob(filepath + '/rectified_left/*.jpg')
+    img_right = glob.glob(filepath + '/rectified_right/*.jpg')
     
     img_left.sort()
     img_right.sort()
@@ -57,16 +57,16 @@ def compute_disparity(filepath, savepath, M1, d1, M2, d2, R, T, img_shape, save=
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('-p', '--filepath', required=True,help='filepath contains left and right file')
-    ap.add_argument('-s', '--savepath', required=True, help='path to save rectified images')
+    ap.add_argument('-s', '--savepath', help='path to save rectified images')
     args = vars(ap.parse_args())
     
     cal_data = StereoCalibration(args['filepath'])
     camera_paras = cal_data.camera_model
-    M1, d1 = camera_paras['M1'], camera_paras['d1']
-    M2, d2 = camera_paras['M2'], camera_paras['d2']
+    M1, d1 = camera_paras['M1'], camera_paras['dist1']
+    M2, d2 = camera_paras['M2'], camera_paras['dist2']
     R, T = camera_paras['R'], camera_paras['T']
     
     paras = []
     paras.extend([M1, d1, M2, d2, R, T, img_size])
     
-    compute_disparity(args['filepath'], args['savepaht'], *paras)
+    compute_disparity(args['filepath'], args['savepath'], *paras)
