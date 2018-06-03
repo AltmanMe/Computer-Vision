@@ -29,10 +29,8 @@ optional arguments:
 
 ## Example
 * ### calibrate camera and undistort images
-```python
+```
     python single_calibrate.py -i /path/image_path -s False
-```
-```
     False means that do not save the undistoted images.
     if you want to save them, you can ignore this parameter.
 ```
