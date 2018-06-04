@@ -32,6 +32,8 @@ def drawlines(img1,img2,lines,pts1,pts2):
 
 img1 = cv2.imread(args['left'], 0)  #queryimage # left image
 img2 = cv2.imread(args['right'], 0) #trainimage # right image
+#print(img1.shape)
+#print(img2.shape)
 
 h1, w1 = img1.shape[:2]
 h2, w2 = img2.shape[:2]
@@ -39,8 +41,8 @@ h2, w2 = img2.shape[:2]
 h = min(h1, h2) 
 w = min(w1, w2)
 
-img1 = img1.resize((h, w, 3))
-img2 = img2.resize((h, w, 3))
+img1 = img1.reshape((h, w))
+img2 = img2.reshape((h, w))
 
 sift = cv2.xfeatures2d.SIFT_create()
 
