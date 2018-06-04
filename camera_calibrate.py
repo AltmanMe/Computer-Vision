@@ -140,23 +140,6 @@ class StereoCalibration(object):
 
         cv2.destroyAllWindows()
         return camera_model
-    
-    def stereo_rectify(self):
-        R1, R2, P1, P2, _, _, _ = cv2.stereoRectify(self.M1, self.d1, self.M2, 
-                                                    self.d2, self.img_shape, self.R, self.T, alpha=-1)
-        
-        map1_x, map1_y = cv2.initUndistortRectifyMap(self.M1, self.d1, R1, P1, self.img_shape, cv2.CV_32FC1)
-        map2_x, map2_y = cv2.initUndistortRectifyMap(self.M2, self.d2, R2, P2, self.img_shape, cv2.CV_32FC1)
-        
-        img1 = cv2.imread()
-        img2 = cv2.imread()
-        
-        undistorted_rectified_l = cv2.remap(img1, map1_x, map1_y, cv2.INTER_LINEAR, self.img_size)  #
-        undistorted_rectified_r = cv2.remap(img2, map2_x, map2_y, cv2.INTER_LINEAR, self.img_size)  #
-        
-        cv2.imwrite('rectified_l.png', undistorted_rectified_l)
-        cv2.imwrite('rectified_r.png', undistorted_rectified_r)
-        print('Finish writing')
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
