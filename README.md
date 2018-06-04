@@ -46,9 +46,9 @@ python rectify.py -h
 * ### visulize depth 
 ```
 python compute_depth.py
+Assumption here is that givn path contains two directories of left and right rectified images.
 ```
 * ### find corresponding feature points and draw epipolar lines
-Assumption here is that givn path contains two directories of left and right rectified images.
 ```
 python epipolar_lines.py -h
 ```
