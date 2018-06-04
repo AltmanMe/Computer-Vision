@@ -14,7 +14,6 @@ Computer Vision Basics
 * ### numpy
 
 ## Guiding
-* ### Assumption here is that given path contains two directories of chessboard images named `left` and `right`.
 * ### Before running any above files, you can use '-h' to get help.
 ```python
 python draw_lines.py -h
@@ -38,6 +37,7 @@ If True, it will make a directory called `undistoted_images` in current dir.
 * ### calibrate binouclar camera system
 ```
 python camera_calibrate.py -h
+Assumption here is that given path contains two directories of chessboard images named `left` and `right`.
 ```
 * ### rectify images
 ```
