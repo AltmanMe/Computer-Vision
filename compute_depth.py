@@ -26,8 +26,8 @@ def compute_disparity(filepath, M1, d1, M2, d2, R, T, img_shape, window_size):
     map1_x, map1_y = cv2.initUndistortRectifyMap(M1, d1, R1, P1, img_shape, cv2.CV_32FC1)
     map2_x, map2_y = cv2.initUndistortRectifyMap(M2, d2, R2, P2, img_shape, cv2.CV_32FC1)
        
-    img_left = glob.glob(filepath + '/rectified_left/*.jpg')
-    img_right = glob.glob(filepath + '/rectified_right/*.jpg')
+    img_left = glob.glob(filepath + '/*.jpg')
+    img_right = glob.glob(filepath + '/*.jpg')
     
     img_left.sort()
     img_right.sort()
