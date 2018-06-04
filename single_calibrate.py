@@ -52,7 +52,7 @@ cv2.destroyAllWindows()
 
 ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
 
-if args['save']:
+if args['savepath']:
     if not os.path.isdir('./undistorted_images'):
         os.mkdir('./undistorted_images')
     for fname in images:
