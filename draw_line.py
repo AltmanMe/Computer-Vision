@@ -12,10 +12,11 @@ import numpy as np
 import argparse
 
 red = (0, 0, 255)  #BGR
+gap = 20
 
 def draw_line(path1, path2):
-    img_left = glob.glob(path1 + '/rectified_left/*.jpg')
-    img_right = glob.glob(path2 + '/rectified_right/*.jpg')
+    img_left = glob.glob(path1 + '/*.jpg')
+    img_right = glob.glob(path2 + '/*.jpg')
     
     img_left.sort()
     img_right.sort()
@@ -28,8 +29,8 @@ def draw_line(path1, path2):
         tot_row = math.floor(h/10)
         
         for r in range(tot_row):
-            img1 = cv2.line(img1, (0, 20*(r-1)), (w, 20*(r-1)), red)
-            img2 = cv2.line(img2, (0, 20*(r-1)), (w, 20*(r-1)), red)
+            img1 = cv2.line(img1, (0, gap*(r-1)), (w, gap*(r-1)), red)
+            img2 = cv2.line(img2, (0, gap*(r-1)), (w, gap*(r-1)), red)
         
         img_horizontal = np.hstack((img2, img1))
         img_hor_con = np.concatenate((img2, img1), axis=1)
