@@ -37,7 +37,7 @@ If True, it will make a directory called `undistoted_images` in current dir.
 * ### calibrate binouclar camera system
 ```
 python camera_calibrate.py -h
-Assumption here is that given path contains two directories of chessboard images named `left` and `right`.
+Assumption here is that given path contains two directories of chessboard images named left and right.
 ```
 * ### rectify images
 ```
