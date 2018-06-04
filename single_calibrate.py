@@ -12,8 +12,8 @@ import os
 import argparse
 
 ap = argparse.ArgumentParser()
-ap.add_argument('-i', '--input', required=True, help='path to input images')
-ap.add_argument('-s', '--save', help='save modified images (True or False)')
+ap.add_argument('-f', '--filepath', required=True, help='path to input images')
+ap.add_argument('-s', '--savepath', help='save modified images (True or False)')
 args = vars(ap.parse_args())
 
 # termination criteria
@@ -27,7 +27,7 @@ objp[:,:2] = np.mgrid[0:9,0:6].T.reshape(-1,2)
 objpoints = [] # 3d point in real world space
 imgpoints = [] # 2d points in image plane
 
-images = glob.glob(args['input'] + '/*.jpg')
+images = glob.glob(args['filepath'] + '/*.jpg')
 
 for fname in images:
     img = cv2.imread(fname)
