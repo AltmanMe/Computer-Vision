@@ -34,7 +34,7 @@ def draw_line(path1, path2):
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
-    ap.add_argument('-l', '--left_img', required=True, help='path to the left')
-    ap.add_argument('-r', '--right_img', required=True, help='path to the right')
+    ap.add_argument('-l', '--left_img', required=True, help='path to the left images directory')
+    ap.add_argument('-r', '--right_img', required=True, help='path to the right images directory')
     args = vars(ap.parse_args())
     draw_line(args['left_img'], args['right_img'])

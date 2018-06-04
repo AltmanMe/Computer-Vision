@@ -11,8 +11,8 @@ from matplotlib import pyplot as plt
 import argparse
 
 ap = argparse.ArgumentParser()
-ap.add_argument('-l', '--left', required=True, help='path to the left image')
-ap.add_argument('-r', '--right', required=True, help='path to the right image')
+ap.add_argument('-l', '--left', required=True, help='path to the left image(single image)')
+ap.add_argument('-r', '--right', required=True, help='path to the right image(single image)')
 args = vars(ap.parse_args())
 
 def drawlines(img1,img2,lines,pts1,pts2):

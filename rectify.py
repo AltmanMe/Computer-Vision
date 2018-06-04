@@ -45,7 +45,7 @@ def stereo_rectify(filepath, savepath, M1, d1, M2, d2, R, T, img_shape, save=Tru
             
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
-    ap.add_argument('-p', '--filepath', required=True,help='filepath contains left and right file')
+    ap.add_argument('-p', '--filepath', required=True,help='path contains the left and right directory')
     ap.add_argument('-s', '--savepath', required=True, help='path to save rectified images')
     args = vars(ap.parse_args())
     

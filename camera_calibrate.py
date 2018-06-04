@@ -160,7 +160,7 @@ class StereoCalibration(object):
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
-    ap.add_argument('-f', '--filepath', help='String Filepath')
+    ap.add_argument('-f', '--filepath', help='path contains the left and right dirs')
     args = vars(ap.parse_args())
     cal_data = StereoCalibration(args['filepath'])
     cal_data.camera_model

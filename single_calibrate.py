@@ -12,9 +12,8 @@ import os
 import argparse
 
 ap = argparse.ArgumentParser()
-ap.add_argument('-i', '--input', required=True, help='path to original images')
+ap.add_argument('-i', '--input', required=True, help='path to input images')
 ap.add_argument('-s', '--save', help='save modified images (True or False)')
-ap.add_argument('-o', '--output', help='path to save modified images')
 args = vars(ap.parse_args())
 
 # termination criteria
@@ -28,7 +27,7 @@ objp[:,:2] = np.mgrid[0:9,0:6].T.reshape(-1,2)
 objpoints = [] # 3d point in real world space
 imgpoints = [] # 2d points in image plane
 
-images = glob.glob(args['input'] + '*.jpg')
+images = glob.glob(args['input'] + '/*.jpg')
 
 for fname in images:
     img = cv2.imread(fname)
@@ -53,7 +52,9 @@ cv2.destroyAllWindows()
 
 ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
 
-if args['mode']:
+if args['save']:
+    if not os.path.isdir('./undistorted_images'):
+        os.mkdir('./undistorted_images')
     for fname in images:
         img = cv2.imread(fname)
         img_name = fname.split(os.sep)[-1].split('.')[0]
@@ -66,7 +67,7 @@ if args['mode']:
         # crop the image
         x,y,w,h = roi
         dst = dst[y:y+h, x:x+w]
-        cv2.imwrite(args['output'] + 'undistorted_{}'.format(img_name), dst)
+        cv2.imwrite('./undistorted_images/undistorted_{}.jpg'.format(img_name), dst)
     cv2.destroyAllWindows()
   
 #calculate re-projection error
