@@ -23,8 +23,8 @@ python draw_lines.py -h
 ```
 optional arguments:
   -h, -- help            show this help message and exit
-  -l LEFT_IMG, -- left_img LEFT_IMG path to the left                        
-  -r RIGHT_IMG, -- right_img RIGHT_IMG path to the right
+  -l LEFT_IMG, -- left_img LEFT_IMG path to the left images directory                        
+  -r RIGHT_IMG, -- right_img RIGHT_IMG path to the right images directory
 ```
 
 
