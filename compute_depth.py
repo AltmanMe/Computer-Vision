@@ -19,7 +19,7 @@ def callback_func(e, x, y, f, p):
         print(threeD[y][x])
 
 
-def compute_disparity(filepath, savepath, M1, d1, M2, d2, R, T, img_shape, window_size, save=True):
+def compute_disparity(filepath, M1, d1, M2, d2, R, T, img_shape, window_size):
     R1, R2, P1, P2, Q, valid_pix_roi1, _valid_pix_roi2 = cv2.stereoRectify(M1, d1, M2, 
                                                 d2, img_shape, R, T, alpha=-1)
     
@@ -68,7 +68,7 @@ def compute_disparity(filepath, savepath, M1, d1, M2, d2, R, T, img_shape, windo
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('-p', '--filepath', required=True,help='path contains the left and right directory')
-    ap.add_argument('-s', '--savepath', help='path to save rectified images')
+#    ap.add_argument('-s', '--savepath', help='path to save rectified images')
     ap.add_argument('-w', '--window_size', help='SAP WINDOW SIZE')
     args = vars(ap.parse_args())
     
@@ -81,7 +81,7 @@ if __name__ == '__main__':
     paras = []
     paras.extend([M1, d1, M2, d2, R, T, img_size])
 
-    compute_disparity(args['filepath'], args['savepath'], *paras, int(args['window_size']))
+    compute_disparity(args['filepath'], *paras, int(args['window_size']))
 
     cv2.setMouseCallback('depth', callback_func, None)
 #    window_size = cv2.getTrackbarPos('SAP_Window_Size', 'depth')
