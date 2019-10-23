@@ -1,7 +1,6 @@
-Computer Vision Basics
-========
 # Stereo Calibration using OpenCV-Python
-## All codes had been tested in Manjaro Linux
+
+All codes had been tested in Manjaro Linux
 
 ## Features
 * ### calibrate single camera
